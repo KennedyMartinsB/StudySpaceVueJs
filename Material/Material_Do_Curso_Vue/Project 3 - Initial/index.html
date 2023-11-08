@@ -24,14 +24,19 @@
                     <div 
                         class="single-todo" 
                         v-for="todo in todos"
-                        :class="{done : todo.done}">
+                        :class="{done : todo.done}"
+                        @click="todo.done = !todo.done">
+                        <!-- Dentro do @click estou alternando o estado da variável -->
                         <p>
                             {{todo.text}}
                         </p>
                     </div>
                 </div>
 
-                <button class="clear">Limpar tudo</button>
+                <!-- Passamos um array vazio para remover todas as tarefas da tela -->
+                <!-- .lenght verifica se o array todos está vazio, o JS interpreta o numero 0 como falso
+                sendo assim tornando o botão invisivel quando não houver tarefa -->
+                <button v-if="todos.length != 0" class="clear" @click="todos=[]">Limpar tudo</button>
 
                 <input type="text" placeholder="Escreva uma nova tarefa..." v-model="newTodo.text">
                 <button class="add" @click="addToDo()">Adicionar</button>
