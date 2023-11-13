@@ -39,16 +39,24 @@ const todosApp = {
             }
         }
     },
-    // Lifecycle Hooks
-    beforeCreate() {
-        console.log("Before create", this.todos)
+    // Oq difere este metodo do updated é que ele não é executado a cada atualização 
+    storeTodos(){
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+        console.log("LocalStorage Updated!!!")
     },
+    // Lifecycle Hooks, dentro do vue existem o before create, created e beforeUpdate
     created() {
-        console.log("Created", this.todos)
+        this.todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : this.todos;
+        console.log("Created!!!")
     },
-    beforeUpdate() {
-        console.log("Before update", this.todos)
-    },
+    // Update é utilizado para pegarmos o estado na hora da atualização
+    // É Possivel utilizar o beforeUpdate tbm porem ele pega o estado do localStorage antes da atualização
+    updated() {
+        // Após atuazar os Todos enviamos novamente esta lista para o localStorage
+        // Dentro deste metodo não importa se o todos já existe pois a lista vai ser substituida
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+        console.log("LocalStorage Updated!!!")
+    }
 };
 
 Vue.createApp(todosApp).mount('#app')
