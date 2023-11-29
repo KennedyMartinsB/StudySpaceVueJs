@@ -1,30 +1,86 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+  import { ref, reactive } from "vue";
+  import Books from "./components/Books.vue"
+  import BookProgress from "./components/BookProgress.vue"
+  import AddBook from "./components/AddBook.vue"
+
+
+  let books = reactive([
+        {
+          id: 1,
+          title: "History of Europe",
+          cover:
+            "https://printpress.cmsmasters.net/default/wp-content/uploads/sites/11/2019/05/printpress-product-6-540x861.jpg",
+          isRead: true,
+          isbn: "0-395-07157-8",
+          author: "Daniel Trejo",
+        },
+        {
+          id: 2,
+          title: "Penguin Classics",
+          cover:
+            "https://printpress.cmsmasters.net/default/wp-content/uploads/sites/11/2019/05/printpress-product-2-540x861.jpg",
+          isRead: false,
+          isbn: "0-395-07157-8",
+          author: "Daniel Trejo, Jon Snow",
+        },
+        {
+          id: 3,
+          title: "Becoming",
+          cover:
+            "https://printpress.cmsmasters.net/default/wp-content/uploads/sites/11/2019/05/printpress-product-7-540x861.jpg",
+          isRead: false,
+          isbn: "0-395-07157-8",
+          author: "Daniel Trejo",
+        },
+        {
+          id: 4,
+          title: "Sonnets",
+          cover:
+            "https://printpress.cmsmasters.net/default/wp-content/uploads/sites/11/2019/05/printpress-product-5-540x861.jpg",
+          isRead: false,
+          isbn: "0-395-07157-8",
+          author: "Daniel Trejo",
+        },
+  ]);
+
+  let showAddBook = ref(false) 
+
+  function toggleIsRead(id) {
+    // console.log('Click', id)
+    books.forEach((book) => {
+      if(book.id == id){
+        book.isRead = !book.isRead;
+      }
+    });
+  }
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container" v-if="!showAddBook">
+    <h1>📖 Meus Livros</h1>
+    <div class="header-btns">
+      <button
+        class="btn"
+        @click="showAddBook = true"
+      >
+        Adicionar Livro +
+      </button>
+    </div>
+ 
+    <div class="books-container">
+      <Books @toggleIsRead="toggleIsRead" :books="books" />
+      <BookProgress :books="books"/>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
+  <div class="container" v-else>
+    <AddBook @closeAddBook="showAddBook = false" />
+  </div>
+
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>
