@@ -30,6 +30,7 @@ import HomeTemporizador from './HomeTemporizador.vue';
 
 export default defineComponent({
     name: 'TrackerForm',
+    emits: ['aoSalvarTarefas'],
     components: {
         HomeTemporizador
     },
@@ -40,9 +41,14 @@ export default defineComponent({
     },
     methods: {
         finalizarTarefa (tempoDecorrido: number) : void {
-            console.log('tempo da tarefa', tempoDecorrido)
-            console.log('descrição da tarefa', this.descricao)
+            // console.log('tempo da tarefa', tempoDecorrido)
+            // console.log('descrição da tarefa', this.descricao)
+            this.$emit('aoSalvarTarefas', {
+              duracaoEmSegundos: tempoDecorrido,
+              descricao: this.descricao
+            })
             this.descricao = ''
+            console.log('Caiu no finish')
         }
     }
 })

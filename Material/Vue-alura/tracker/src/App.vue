@@ -6,23 +6,22 @@
       <Sidebar/>
     </div>
     <div class="column is-three-quarter">
-      <TrackerForm @aoSalvarTarefas="saveTasks"/>
+      <TrackerForm @aoSalvarTarefas="salvarTarefas"/>
       <div class="list">
         <!-- Como não há banco de dados não recebemos uma chave de cada item -->
          <!-- Então para solucionar isso utilizamos o index de cada item da tarefa como key -->
-        <!-- <HomeTask v-for="(task, index) in tasks" :key="index"/> -->
+        <HomeTask v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa"/>
       </div>
     </div>
 
   </main>
-  
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Sidebar from './components/HomeSidebar.vue'
 import TrackerForm from './components/HomeForm.vue'
-// import HomeTask from './components/HomeTask.vue';
+import HomeTask from './components/HomeTask.vue';
 import ITask from './interface/ITask';
 
 export default defineComponent({
@@ -30,16 +29,16 @@ export default defineComponent({
   components: {
     Sidebar,
     TrackerForm,
-    // HomeTask
+    HomeTask
   },
   data(){
     return{
-      tasks: [] as ITask[]
+      tarefas: [] as ITask[]
     }
   },
   methods: {
-    saveTasks(task: ITask){
-      this.tasks.push(task)
+    salvarTarefas(tarefa: ITask){
+      this.tarefas.push(tarefa)
     }
   }
 });
