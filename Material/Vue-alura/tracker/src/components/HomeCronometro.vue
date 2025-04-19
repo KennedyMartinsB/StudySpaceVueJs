@@ -12,7 +12,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'HomeCronometro',
     props:{
-        timeSeconds: {
+        tempoEmSegundos: {
             type: Number,
             default: 0
         }
@@ -23,7 +23,7 @@ export default defineComponent({
             // O new Date().toISOString() pega a data atual 
             // Que vem neste formato '2025-04-17T04:15:30.515Z'
             // .substring(11, 8) pega os valores a partir do 11 digito que é  04:17
-            return new Date(this.timeSeconds * 1000).toISOString().substr(11, 8)
+            return new Date(this.tempoEmSegundos * 1000).toISOString().substr(11,8)
         }
         
     },

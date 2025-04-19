@@ -1,17 +1,24 @@
 <template>
     <div class="box">
-        <div class="columns">
-            <div class="column is-8" role="form" aria-label="Formulario para criação de tarefa">
-                <input type="text" class="input" placeholder="Digite a tarefa que deseja iniciar">
-
-            </div>
-            <div class="column">
-               <HomeTemporizador/>
-            </div>
-
+      <div class="columns">
+        <div
+          class="column is-8"
+          role="form"
+          aria-label="Formulário para criação de uma nova tarefa"
+        >
+          <input
+            type="text"
+            class="input"
+            placeholder="Qual tarefa você deseja iniciar?"
+            v-model="descricao"
+          />
         </div>
+        <div class="column">
+          <HomeTemporizador @aoTemporizadorFinalizado="finalizarTarefa"/>
+        </div>
+      </div>
     </div>
-</template>
+  </template>
 
 <style scoped>
 
@@ -25,6 +32,18 @@ export default defineComponent({
     name: 'TrackerForm',
     components: {
         HomeTemporizador
+    },
+    data (){
+        return {
+            descricao: ''
+        }
+    },
+    methods: {
+        finalizarTarefa (tempoDecorrido: number) : void {
+            console.log('tempo da tarefa', tempoDecorrido)
+            console.log('descrição da tarefa', this.descricao)
+            this.descricao = ''
+        }
     }
 })
 

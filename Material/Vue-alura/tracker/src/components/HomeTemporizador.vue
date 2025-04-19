@@ -1,6 +1,6 @@
 <template>
     <div class="is-flex is-align-items-center is-justify-content-space-between">
-        <HomeCronometro :timeSeconds="timeSeconds"/>
+        <HomeCronometro :tempoEmSegundos="tempoEmSegundos"/>
         <button class="button" @click="startCount" :disabled="timerRodando">
             <span class="icon">
                 <i class="fas fa-play"></i>
@@ -26,12 +26,13 @@ import HomeCronometro from './HomeCronometro.vue';
 
 export default defineComponent({
     name: 'TrackerForm',
+    emits: ['aoTemporizadorFinalizado'],
     components: {
         HomeCronometro
     },
     data (){
         return{
-            timeSeconds: 0,
+            tempoEmSegundos: 0,
             cronometro: 0,
             timerRodando: false
         }
@@ -40,18 +41,20 @@ export default defineComponent({
         startCount(){
             // Iniciar a contagem
             // 1 segundo no set interval é igual a 1000
-            console.log('Iniciando!!!')
+            // console.log('Iniciando!!!')
             this.timerRodando = true
             this.cronometro = setInterval(()=>{
                 // This é usado para refenciar um valor criado anteriormente antes da sua utilização no bloco
-                this.timeSeconds+=1
+                this.tempoEmSegundos+=1
             }, 1000)
         },
         finishCount(){
             // Finalizando contagem
-            console.log('Finalizando!!!')
+            // console.log('Finalizando!!!')
             this.timerRodando = false
             clearInterval(this.cronometro)
+            this.$emit('aoTemporizadorFinalizado', this.tempoEmSegundos)
+            this.tempoEmSegundos = 0
         }
     }
 })
