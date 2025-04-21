@@ -1,20 +1,22 @@
 <template>
-    <div class="box has-text-weight-bold">
+    <MessageBox >
         <div class="columns">
             <div class="column is-7">
-                {{tarefa.descricao}}
+                {{ tarefa.descricao || 'Tarefa sem descrição'}}
             </div>
             <div class="column">
                 <HomeCronometro :tempoEmSegundos="tarefa.duracaoEmSegundos"/>
             </div>
         </div>
-    </div>
+    </MessageBox>
+    <!-- <MessageBox /> -->
 </template>
 
 <script lang="ts">
 import ITask from '@/interface/ITask';
 import HomeCronometro from './HomeCronometro.vue';
 import { defineComponent, PropType } from 'vue';
+import MessageBox from './HomeMessageBox.vue';
 
 export default defineComponent({
     name: 'HomeTask',
@@ -25,7 +27,8 @@ export default defineComponent({
         }
     },
     components: {
-        HomeCronometro
+        HomeCronometro,
+        MessageBox
     }
 })
 

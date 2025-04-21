@@ -11,9 +11,11 @@
         <!-- Como não há banco de dados não recebemos uma chave de cada item -->
          <!-- Então para solucionar isso utilizamos o index de cada item da tarefa como key -->
         <HomeTask v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa"/>
+        <HomeMessageBox v-if="listaVazia">
+          Você não está muito produtivo hoje :(
+        </HomeMessageBox>
       </div>
     </div>
-
   </main>
 </template>
 
@@ -23,17 +25,24 @@ import Sidebar from './components/HomeSidebar.vue'
 import TrackerForm from './components/HomeForm.vue'
 import HomeTask from './components/HomeTask.vue';
 import ITask from './interface/ITask';
+import HomeMessageBox from './components/HomeMessageBox.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     Sidebar,
     TrackerForm,
-    HomeTask
+    HomeTask,
+    HomeMessageBox
   },
   data(){
     return{
       tarefas: [] as ITask[]
+    }
+  },
+  computed: {
+    listaVazia () : boolean{
+      return this.tarefas.length === 0
     }
   },
   methods: {
